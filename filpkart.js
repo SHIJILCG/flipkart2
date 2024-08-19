@@ -7,6 +7,9 @@ var numberoffilters = [];
 var funcnamearray = [];
 numberoffilters.length = 0;
 let flag = 0;
+let flag1=0;
+let flag2=0;
+let counter=0;
 var sorttextvalue = "Relevance";
 const originalMinOptions = Array.from(
   document.getElementById("select-price-1").options
@@ -17,6 +20,7 @@ const originalMaxOptions = Array.from(
 const minSelect = document.getElementById("select-price-1");
 const maxSelect = document.getElementById("select-price");
 var themainarrayforsorting = [];
+let filterbybrandnamefun;
 function fetchingdata() {
   fetch("allproducts.json")
     .then((response) => response.json())
@@ -53,6 +57,7 @@ function maintwo(data) {
   headerparts(data.headeritems);
   headerparts2(data.headeritems2);
   createbrandname(data.brandname);
+  creatingratingssort(data.sortingrationg);
   creatingsotingnames(data.sortingNames);
 }
 /**/ ////////////////////////////////////////////////////////////////// */
@@ -117,6 +122,22 @@ function createbrandname(data) {
   document.querySelector(
     ".brand-search-section-inner-2"
   ).innerHTML += `<span>${findnumberofbrand(data.brand1)}</span>`;
+}
+/**/ ////////////////////////////////////////////////////////////////// */
+
+function creatingratingssort(data){
+     for(let item of data.ratingsorting){
+       document.querySelector('.userratingsection-body-section-1').innerHTML +=`
+           <div class="select-butt">
+                   <div class="select-butt-inner">
+                     <label">
+                          <input type="checkbox" id="option-1" onchange="filterbyuserrating('${item}',this,event)">
+                          <div class="select-butt-inner-text">${item} ★ & above</div>
+                     </label>
+                </div>
+               </div>
+       `;
+     }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function findnumberofbrand(data) {
@@ -210,7 +231,7 @@ function resetoption2(a, b) {
 }
 /*/////////////////////////////////////////////////////////////////// */
 function minmaxpricefiltering() {
-  if (funcnamearray.length != 0) {
+  if (funcnamearray.length !== 0) {
     callallthefilterinthearry();
   }
 
@@ -235,8 +256,10 @@ function minmaxpricefiltering() {
       sortOptionClickeddisplayed(sorttextvalue);
     } else if (isNaN(minprice) && isNaN(maxprice)) {
       filteredArray = [...dataarry];
+      sortOptionClickeddisplayed(sorttextvalue);
     }
   } else {
+    
     flag = 1;
     if (!isNaN(minprice) && !isNaN(maxprice)) {
       let filterdarray22 = [];
@@ -443,35 +466,91 @@ function finddiscount(a, b) {
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function filterbybrandname(item, checkbox, event) {
+  filterbybrandnamefun=filterbybrandname;
   if (flag === 0) {
     filteredArray.length = 0;
   }
   if (checkbox.checked) {
-    filteraddding2(item);
+    filteraddding2(item,"");
     filterbyarryconteny(finditembybrandname, item);
   } else {
     removeunckeckedfromfilters(item, event);
     removefilterbyarryconteny(finditembybrandname, item);
   }
+
+}
+/**/ ////////////////////////////////////////////////////////////////// */
+
+function filterbyuserrating(item, checkbox, event){
+  if (flag === 0) {
+    filteredArray.length = 0;
+  }
+  if (checkbox.checked) {
+    filteraddding2(item,"★ & above");
+    filterbyarryconteny(filterbyuserratingitem, item);
+  } else { 
+    removeunckeckedfromfilters(item, event);
+    removefilterbyarryconteny(filterbyuserratingitem, item);
+  }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function finditembybrandname(item) {
-  console.log("here");
   for (let data of dataarry) {
     if (data.brand == item) {
       filteredArray.push(data);
     }
   }
-  console.log("checked", item);
+  if(flag2 != 0){
+    console.log("hiii");
+    console.log("checked", item);
+    let copyarray=[...filteredArray];
+    filteredArray.length=0;
+    filteredArray=findRepeatingElements(copyarray)
+   }
+   console.log(filteredArray);
 }
 /**/ ////////////////////////////////////////////////////////////////// */
-function filteraddding2(item1) {
+function filterbyuserratingitem(item){
+    counter++;
+    flag2=1;
+    for(let data of dataarry){
+      if(data.rating.average >= item){
+         filteredArray.push(data);
+      }
+    }
+    if(counter == 2){
+      console.log("hiii2");
+      console.log("checked", item);
+      let copyarray=[...filteredArray];
+      filteredArray.length=0;
+      filteredArray=findRepeatingElements(copyarray);
+      console.log(filteredArray)
+    }
+      
+  }
+/**/ ////////////////////////////////////////////////////////////////// */
+  function findRepeatingElements(arr) {
+    console.log("function is excuted");
+    const seen = new Set();
+    const repeats = new Set();
+    arr.forEach((item) => {
+      const jsonString = JSON.stringify(item); 
+      if (seen.has(jsonString)) {
+        repeats.add(jsonString); 
+      } else {
+        seen.add(jsonString);
+      }
+    });
+    return [...repeats].map(jsonStr => JSON.parse(jsonStr));
+  }
+/**/ ////////////////////////////////////////////////////////////////// */
+function filteraddding2(item1,item2) {
   const filteringspace = document.getElementById("Filters-id");
   let output = "";
   output += `
-                  <div id="fitters-item">
-                       <div id="crossxbutt"  class="otherfilters" onclick="removefilter(event)">✕</div>
-                       <div id="itters-item-value">${item1}</div>
+                  <div id="fitters-item" class="otherfilters">
+                       <div class="crossxbutt"  onclick="removefilter(event)">✕</div>
+                       <div id="itters-item-value">${item1} ${item2}</div>
                   </div>
       `;
   filteringspace.innerHTML += output;
@@ -489,7 +568,7 @@ function filteraddding(item1, item2) {
     let output = "";
     output += `
                     <div id="fitters-item" class="minmaxdiv">
-                         <div id="crossxbutt" onclick="removefilter(event)">✕</div>
+                         <div class="crossxbutt" onclick="removefilter(event)">✕</div>
                          <div id="itters-item-value">₹${item1} - ₹${item2}</div>
                     </div>
         `;
@@ -501,7 +580,7 @@ function filteraddding(item1, item2) {
     addfilterreomovebutt();
   } else {
     document.querySelector(".minmaxdiv").innerHTML = `
-                         <div id="crossxbutt" onclick="removefilter(event)">✕</div>
+                         <div class="crossxbutt" onclick="removefilter(event)">✕</div>
                          <div id="itters-item-value">₹${item1} - ₹${item2}</div>
         `;
   }
@@ -517,9 +596,12 @@ function addfilterreomovebutt() {
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function removeunckeckedfromfilters(item) {
-  let allfilters = document.querySelectorAll("#crossxbutt");
+  console.log(item);
+  let allfilters = document.querySelectorAll('.crossxbutt');
   allfilters.forEach((data) => {
-    if (data.nextElementSibling.textContent == item) {
+    let siblingText = data.nextElementSibling.textContent.trim();
+    let firstValue = siblingText.split(' ')[0];
+    if (firstValue == item) {
       data.parentElement.remove();
     }
   });
@@ -528,8 +610,8 @@ function removeunckeckedfromfilters(item) {
     clearallthefilters();
   }
   numberoffilters = document.querySelectorAll("#fitters-item");
-  console.log(numberoffilters.length);
 }
+
 /**/ ////////////////////////////////////////////////////////////////// */
 function clearallthefilters() {
   const filteringspace = document.getElementById("Filters-id");
@@ -560,27 +642,28 @@ function removefilter(event) {
   /**single filtes removerd here..... */
   let parentdiv = event.target.parentElement;
   parentdiv.remove();
+  
   let collection = document.querySelectorAll("#fitters-item");
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  let checkedval = event.target.nextElementSibling.textContent;
+  let checkedval = event.target.nextElementSibling.textContent.trim();
+  let firstValue = checkedval.split(' ')[0];
   checkboxes.forEach((checkboxe) => {
     let val = checkboxe.nextElementSibling.textContent;
-    if (val === checkedval) {
-      removefilterbyarryconteny(filterbybrandname, checkedval);
-      if (checkboxe.checked) {
-        checkboxe.checked = false;
-      }
+    let checkedval2 = checkboxe.nextElementSibling.textContent.trim();
+    let firstValue2 = checkedval2.split(' ')[0];
+    if (firstValue2 === firstValue && checkboxe.checked) {
+      checkboxe.checked = false;
+      removefilterbyarryconteny(finditembybrandname,val)
     }
   });
   if (collection.length == 0) {
     const item2 = document.getElementById("claearall");
-    const item3 = document.getElementById("clearallthing-child");
-    item2.removeChild(item3);
+    item2.innerHTML='';
     filteredArray.length = 0;
     numberoffilters.length = 0; /**numberof flters is zero */
-    sortOptionClickeddisplayed(sorttextvalue);
+    minmaxpricefiltering();
   }
-  if (parentdiv.className) {
+  if (parentdiv.className == 'minmaxdiv') {
     minprice = "MIN";
     maxprice = "MAX";
     priceadjuster();
@@ -672,11 +755,11 @@ function priceadjuster() {
 /**/ ////////////////////////////////////////////////////////////////// */
 function filterbyarryconteny(func, item) {
   funcnamearray.push([func, item]);
-  callallthefilterinthearry();
   minmaxpricefiltering();
 }
 function callallthefilterinthearry() {
-  console.log("function is executing");
+  console.log("///////////////////////////////////////////////////////////")
+  console.log(funcnamearray);
   filteredArray.length = 0;
   funcnamearray.forEach((data) => {
     let fun = data[0];
@@ -686,8 +769,9 @@ function callallthefilterinthearry() {
 }
 function removefilterbyarryconteny(func, itemname) {
   funcnamearray = funcnamearray.filter(
-    (item) => !(item[0] === func && item[1] === itemname)
+    (item) => 
+      !(item[0] === func && item[1] === itemname)
+    
   );
-  callallthefilterinthearry();
   minmaxpricefiltering();
 }
