@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="flipkart.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main-view">
+      <div class="headers">
+        <header id="header-1">
+          <div class="header-inner">
+            <div class="header-inner-content">
+              <div class="flipcart-img-1">
+                <div class="flipcart-img-1-inner">
+                  <div class="flipcart-img-1-inner-1">
+                    <div>
+                      <img src="" alt="" id="flipcart-text-img" />
+                    </div>
+                  </div>
+                  <div class="flipcart-img-1-inner-2">
+                    <div>
+                      Explore
+                      <span>Plus</span>
+                      <img src="img/plus_aef861.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flipcart-search-bar">
+                <div class="flipcart-search-bar-inner">
+                  <div class="search-space">
+                    <div class="search-space-inner">
+                      <input type="text" name="" id="input-1" />
+                    </div>
+                    <button id="search-img">
+                      <img src="" alt="" id="search-img-tag" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flipcart-login-butt">
+                <span id="flipcart-login-butt-span">
+                  <a href="" id="flipcart-login-butt-a"></a>
+                </span>
+              </div>
+              <div class="flipcart-becomeSeller-butt">
+                <span id="flipcart-becomeSeller-butt-span">
+                  <a href="" id="flipcart-becomeSeller-butt-a"></a>
+                </span>
+              </div>
+              <div class="flipcart-More-butt">
+                <span id="flipcart-More-butt-span">
+                  <a href="" id="flipcart-More-butt-text"></a>
+                  <img src="" alt="" id="flipcart-More-butt-img" />
+                </span>
+              </div>
+              <div class="flipcart-Cart-butt">
+                <span id="flipcart-Cart-butt-span">
+                  <img src="" alt="" id="flipcart-Cart-butt-img" />
+                  <a href="" id="flipcart-Cart-butt-text"></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+        <header id="header-2">
+          <div class="header-2-inner"></div>
+        </header>
+      </div>
+      <section>
+        <div class="main-body">
+          <div class="main-body-inner">
+            <div class="main-body-inner-left-side">
+              <div class="main-body-inner-left-side-inner">
+                <div class="filter-secdtion">
+                  <section id="filter-adding-section">
+                    <div
+                      class="filter-adding-section-inner"
+                      id="filter-adding-section-inner-id"
+                    >
+                      <div class="filter-adding-section-inner-content">
+                        <span>Filters</span>
+                      </div>
+                      <div id="claearall" onclick="clearallthefilters()"></div>
+                    </div>
+                    <div id="filtersshowingsection">
+                      <div class="fltters" id="Filters-id"></div>
+                      <div class="showmorefilters">
+                        <span>Show more</span>
+                      </div>
+                    </div>
+                  </section>
+                  <div class="categories">
+                    <section id="categories-inner">
+                      <div class="categories-inner-text">
+                        <span>CATEGORIES</span>
+                      </div>
+                      <div>
+                        <div class="categories-inner-less-opacity">
+                          <span
+                            ><img src="img/svgexport-10 (3).svg" alt=""
+                          /></span>
+                          <a href="">Mobiles & Accessories</a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="categories-inner-less-opacity">
+                          <span><img src="" alt="" /></span>
+                          <a href="" id="categories-inner-less-opacity-a-tag"
+                            >Mobiles</a
+                          >
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <section id="price-maintain">
+                    <div class="price-maintain-text">
+                      <span>PRICE</span>
+                    </div>
+                    <div class="price-maintain-butt-1">
+                      <div class="price-maintain-butt-1-inner">
+                        <div class="swaping-div"></div>
+                        <div class="swaping-div"></div>
+                        <div class="swaping-div"></div>
+                        <div class="swaping-div"></div>
+                        <div class="swaping-div"></div>
+                      </div>
+                    </div>
+                    <div class="price-maintain-butt-2">
+                      <div class="price-maintain-butt-2-inner-1">
+                        <div class="left-butt">
+                          <div class="butt-circular"></div>
+                        </div>
+                        <div class="right-butt">
+                          <div class="butt-circular"></div>
+                        </div>
+                        <div class="the-line-2"></div>
+                      </div>
+                      <div class="price-maintain-butt-2-inner-2">
+                        <div class="dot-div">.</div>
+                        <div class="dot-div">.</div>
+                        <div class="dot-div">.</div>
+                        <div class="dot-div">.</div>
+                        <div class="dot-div">.</div>
+                        <div class="dot-div">.</div>
+                      </div>
+                    </div>
+                    <div class="min-max-butt">
+                      <div class="min-butt">
+                        <select id="select-price-1" onchange="filtering(event)">
+                          <option value="MIN">Min</option>
+                          <option value="10000" id="select-items-1">
+                            ₹10000
+                          </option>
+                          <option value="15000" id="select-items-1">
+                            ₹15000
+                          </option>
+                          <option value="20000" id="select-items-1">
+                            ₹20000
+                          </option>
+                          <option value="30000" id="select-items-1">
+                            ₹30000
+                          </option>
+                        </select>
+                      </div>
+                      <div class="to">to</div>
+                      <div class="max-but">
+                        <select id="select-price" onchange="filtering(event)">
+                          <option value="MAX">₹30000+</option>
+                          <option value="10000" id="select-items-1">
+                            ₹10000
+                          </option>
+                          <option value="15000" id="select-items-1">
+                            ₹15000
+                          </option>
+                          <option value="20000" id="select-items-1">
+                            ₹20000
+                          </option>
+                          <option value="30000" id="select-items-1">
+                            ₹30000
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </section>
+                  <section id="brand-section">
+                    <div class="brand-text">
+                      <div class="brand-text-inner">Brand</div>
+                      <img src="img/svgexport-10 (3).svg" alt="" />
+                    </div>
+                    <div class="brand-search-section">
+                      <div class="brand-search-section-inner-1">
+                        <div class="search-place">
+                          <img src="img/svgexport-9.svg" alt="" />
+                          <input type="text" placeholder="Search Brand" />
+                        </div>
+                        <!--show the brand name-->
+                      </div>
+                      <div class="brand-search-section-inner-2">
+                        <!--numberof brands-->
+                      </div>
+                    </div>
+                  </section>
+                   <section id="userratingsection">
+                    <div class="userratingsection-text">
+                      <div class="userratingsection-text-inner">CUSTOMER RATINGS</div>
+                      <img src="img/svgexport-10 (3).svg" alt="" />
+                    </div>
+                    <div class="userratingsection-body-section">
+                      <div class="userratingsection-body-section-1">
+                        <!--show the brand name-->
+                      </div>
+                    </div>
+                   </section>
+                </div>
+                <div class="main-body-inner-left-side-inner-content-img"></div>
+              </div>
+            </div>
+            <div class="main-body-inner-right-side">
+              <div class="main-body-inner-right-side-header">
+                <div class="main-body-inner-right-side-header-inner">
+                  <div class="main-body-inner-right-side-header-inner-content">
+                    <div
+                      class="main-body-inner-right-side-header-inner-content-1"
+                    >
+                      <div class="path-1">
+                        <a href="">Home</a>
+                        <img src="img/svgexport-10 (3).svg" alt="" />
+                      </div>
+                      <div class="path-1">
+                        <a href="">Mobiles & Accessories</a>
+                        <img src="img/svgexport-10 (3).svg" alt="" />
+                      </div>
+                      <div class="path-1">
+                        <a href="">Mobiles</a>
+                        <img src="img/svgexport-10 (3).svg" alt="" />
+                      </div>
+                    </div>
+                    <div
+                      class="main-body-inner-right-side-header-inner-content-2"
+                      id="numberofresults"
+                    ></div>
+                    <div
+                      class="main-body-inner-right-side-header-inner-content-3"
+                    >
+                      <span class="Sort-option-1">Sort By</span>
+                      <!--sorting names-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="productsshowHere"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="filpkart.js"></script>
+  </body>

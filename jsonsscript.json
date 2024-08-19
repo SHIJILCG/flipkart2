@@ -1,0 +1,67 @@
+{  
+     "headeritems":
+         {
+            "placeholdertext":"mobiles",
+            "loginbuttname" :"Login",
+            "loginSellername" :"Become a Seller",
+            "loginMorename" :"More",
+            "Flipcartimg" :"img/flipkart-plus_8d85f4.png",
+            "Sarchimgheader" :"img/svgexport-1 (8).svg",
+            "Moreimg" :"img/svgexport-2 (6).svg",
+            "Cartimg" :"img/svgexport-3 (23).svg",
+            "Carttext":"Cart"      
+
+         },
+         "headeritems2":
+            {
+                "listscrolldownbutt":[
+                    {
+                        "listscrolldownbuttText":"Electonics",
+                        "listscrolldownbuttImg":"svgexport-12 (2).svg"
+                    },
+                    {
+                        "listscrolldownbuttText":"TVs & Appliances",
+                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                    },
+                    {
+                        "listscrolldownbuttText":"Men",
+                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                    } ,
+                    {
+                        "listscrolldownbuttText":"Women",
+                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                    },
+                    {
+                        "listscrolldownbuttText":"Baby & Kids",
+                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                    },
+                    {
+                        "listscrolldownbuttText":"Home & Furniture",
+                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                    },
+                    {
+                        "listscrolldownbuttText":"Sports, Books & More",
+                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                    }
+                ],
+                "abutt":[
+                    {
+                        "AbuttText":"Flights"
+                    },
+                    {
+                        "AbuttText":"Offer Zone"
+                    }
+                ]
+            }, 
+            "brandname":{
+                 "brand1":["SAMSUNG","vivo","realmi","POCO","MOTOROLA","OPPO"],
+                  "numberofitems":5
+            },
+            "sortingNames":{
+                "sorting":["Relevance","Popularity","price--Low to High","price--High to Low","Newest First"]
+            },
+            "sortingrationg":{
+                 "ratingsorting":[4,3]
+            }
+
+}
