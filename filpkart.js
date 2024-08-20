@@ -2,6 +2,9 @@ var minprice = "MIN";
 var maxprice = "MAX";
 var dataarry = [];
 var filteredArray = [];
+const myset = new Set();
+const myset1 = new Set();
+const result= new Set();
 var Array2 = [];
 var numberoffilters = [];
 var funcnamearray = [];
@@ -497,52 +500,41 @@ function filterbyuserrating(item, checkbox, event){
 function finditembybrandname(item) {
   for (let data of dataarry) {
     if (data.brand == item) {
-      filteredArray.push(data);
+      myset.add(data);
     }
   }
-  if(flag2 != 0){
-    console.log("hiii");
-    console.log("checked", item);
-    let copyarray=[...filteredArray];
-    filteredArray.length=0;
-    filteredArray=findRepeatingElements(copyarray)
-   }
-   console.log(filteredArray);
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function filterbyuserratingitem(item){
-    counter++;
-    flag2=1;
     for(let data of dataarry){
       if(data.rating.average >= item){
-         filteredArray.push(data);
+         myset1.add(data);
       }
-    }
-    if(counter == 2){
-      console.log("hiii2");
-      console.log("checked", item);
-      let copyarray=[...filteredArray];
-      filteredArray.length=0;
-      filteredArray=findRepeatingElements(copyarray);
-      console.log(filteredArray)
-    }
-      
+    }     
   }
 /**/ ////////////////////////////////////////////////////////////////// */
-  function findRepeatingElements(arr) {
-    console.log("function is excuted");
-    const seen = new Set();
-    const repeats = new Set();
-    arr.forEach((item) => {
-      const jsonString = JSON.stringify(item); 
-      if (seen.has(jsonString)) {
-        repeats.add(jsonString); 
-      } else {
-        seen.add(jsonString);
-      }
-    });
-    return [...repeats].map(jsonStr => JSON.parse(jsonStr));
+function cimbinigarray(){
+  if(myset.size === 0 && myset1.size === 0){
+    return
   }
+  if(myset.size === 0 || myset1.size === 0){
+    for (let item of myset) {
+      result.add(item);
+    }
+    for (let item of myset1) {
+      result.add(item);
+    }
+    filteredArray = [...result];  
+  }else{
+    const commonSet = new Set();
+    for (let item of myset) {
+      if (myset1.has(item)) {
+        commonSet.add(item);
+      }
+    }
+    filteredArray = [...commonSet];  
+  }
+}
 /**/ ////////////////////////////////////////////////////////////////// */
 function filteraddding2(item1,item2) {
   const filteringspace = document.getElementById("Filters-id");
@@ -759,13 +751,16 @@ function filterbyarryconteny(func, item) {
 }
 function callallthefilterinthearry() {
   console.log("///////////////////////////////////////////////////////////")
-  console.log(funcnamearray);
   filteredArray.length = 0;
+  myset.clear();
+  myset1.clear();
+  result.clear();
   funcnamearray.forEach((data) => {
     let fun = data[0];
     let value = data[1];
     fun(value);
   });
+  cimbinigarray()
 }
 function removefilterbyarryconteny(func, itemname) {
   funcnamearray = funcnamearray.filter(
