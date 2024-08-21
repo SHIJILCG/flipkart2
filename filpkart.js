@@ -4,15 +4,17 @@ var dataarry = [];
 var filteredArray = [];
 const myset = new Set();
 const myset1 = new Set();
-const result= new Set();
+const myset2 = new Set();
+const result = new Set();
 var Array2 = [];
 var numberoffilters = [];
 var funcnamearray = [];
 numberoffilters.length = 0;
 let flag = 0;
 let flag1=0;
-let flag2=0;
-let counter=0;
+let counter = 0;
+let counter1=0;
+let counter2=0;
 var sorttextvalue = "Relevance";
 const originalMinOptions = Array.from(
   document.getElementById("select-price-1").options
@@ -62,6 +64,7 @@ function maintwo(data) {
   createbrandname(data.brandname);
   creatingratingssort(data.sortingrationg);
   creatingsotingnames(data.sortingNames);
+  creatingramsort(data.sortingbyram);
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function headerparts(data) {
@@ -98,7 +101,7 @@ function createlistdownbutt(data, container) {
     output += `
                  <span class="listscrolldownbutt-item">
                           ${item.listscrolldownbuttText}
-                          <img src="${item.listscrolldownbuttImg}" alt="${item.listscrolldownbuttText}">
+                          <img src="img/svgexport-4 (3).svg" alt="${item.listscrolldownbuttText}">
                       </span>
           `;
   }
@@ -128,19 +131,34 @@ function createbrandname(data) {
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 
-function creatingratingssort(data){
-     for(let item of data.ratingsorting){
-       document.querySelector('.userratingsection-body-section-1').innerHTML +=`
+function creatingratingssort(data) {
+  for (let item of data.ratingsorting) {
+    document.querySelector(".userratingsection-body-section-1").innerHTML += `
            <div class="select-butt">
                    <div class="select-butt-inner">
                      <label">
-                          <input type="checkbox" id="option-1" onchange="filterbyuserrating('${item}',this,event)">
-                          <div class="select-butt-inner-text">${item} ★ & above</div>
+                          <input type="checkbox" id="option-2" onchange="filterbyuserrating('${item}',this,event)">
+                          <div class="select-butt-inner-text">${item} & above</div>
                      </label>
                 </div>
                </div>
        `;
-     }
+  }
+}
+/**/ ////////////////////////////////////////////////////////////////// */
+function creatingramsort(data) {
+  for (let item of data.ramdata) {
+    document.querySelector(".ramsection-body-section-1").innerHTML += `
+        <div class="select-butt">
+                <div class="select-butt-inner">
+                  <label">
+                       <input type="checkbox" id="option-3" onchange="filterbyram('${item}',this,event)">
+                       <div class="select-butt-inner-text">${item} GB</div>
+                  </label>
+             </div>
+            </div>
+    `;
+  }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function findnumberofbrand(data) {
@@ -262,7 +280,6 @@ function minmaxpricefiltering() {
       sortOptionClickeddisplayed(sorttextvalue);
     }
   } else {
-    
     flag = 1;
     if (!isNaN(minprice) && !isNaN(maxprice)) {
       let filterdarray22 = [];
@@ -314,10 +331,16 @@ function sortOptionClickeddisplayed(text) {
   if (text == "Relevance") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       console.log("filters not applyed");
+      Array2.sort((a, b) => a.relevance - b.relevance);
       createpriducts(Array2);
     } else {
       console.log("filters are applyed");
+      filteredArray.sort((a, b) => a.relevance - b.relevance);
       createpriducts(filteredArray);
+      if(filteredArray.length===0){
+        makenoitempage()
+        return;
+      }
     }
   } else if (text == "Popularity") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
@@ -328,6 +351,10 @@ function sortOptionClickeddisplayed(text) {
       console.log("filters are applyed");
       filteredArray.sort((a, b) => a.rating.average - b.rating.average);
       createpriducts(filteredArray);
+      if(filteredArray.length===0){
+        makenoitempage()
+        return;
+      }
     }
   } else if (text == "price--Low to High") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
@@ -338,6 +365,10 @@ function sortOptionClickeddisplayed(text) {
       console.log("filters are applyed");
       filteredArray.sort((a, b) => b.price - a.price);
       createpriducts(filteredArray);
+      if(filteredArray.length===0){
+        makenoitempage()
+        return;
+      }
     }
   } else if (text == "price--High to Low") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
@@ -346,6 +377,10 @@ function sortOptionClickeddisplayed(text) {
     } else {
       filteredArray.sort((a, b) => a.price - b.price);
       createpriducts(filteredArray);
+      if(filteredArray.length===0){
+        makenoitempage()
+        return;
+      }
     }
   } else {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
@@ -358,6 +393,10 @@ function sortOptionClickeddisplayed(text) {
         (a, b) => new Date(b.newLaunchDate) - new Date(a.newLaunchDate)
       );
       createpriducts(filteredArray);
+      if(filteredArray.length===0){
+        makenoitempage()
+        return;
+      }
     }
   }
 }
@@ -373,7 +412,7 @@ function createpriducts(data) {
                   <div class="product-inner-item">
                         <div class="product-inner-item-condent">
                               <div class="product-inner-item-condent-inner">
-                                   <a href="">
+                                   <a href="${item.url}">
   
                                        <div class="product-left-side">
                                             <div class="product-img">
@@ -467,16 +506,18 @@ function listcreating(data) {
 function finddiscount(a, b) {
   return (((b - a) / b) * 100).toFixed(2) + "%";
 }
-/**/ ////////////////////////////////////////////////////////////////// */
+/**/ ////////////////////////////////////////////////////////////////// */allthesortingareshowhere
 function filterbybrandname(item, checkbox, event) {
-  filterbybrandnamefun=filterbybrandname;
+  filterbybrandnamefun = filterbybrandname;
   if (flag === 0) {
     filteredArray.length = 0;
   }
   if (checkbox.checked) {
-    filteraddding2(item,"");
+    filteraddding2(item, "");
+    counter++;
     filterbyarryconteny(finditembybrandname, item);
   } else {
+    counter--;
     removeunckeckedfromfilters(item, event);
     removefilterbyarryconteny(finditembybrandname, item);
   }
@@ -484,16 +525,34 @@ function filterbybrandname(item, checkbox, event) {
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 
-function filterbyuserrating(item, checkbox, event){
+function filterbyuserrating(item, checkbox, event) {
   if (flag === 0) {
     filteredArray.length = 0;
   }
   if (checkbox.checked) {
-    filteraddding2(item,"★ & above");
+      counter1++;
+    filteraddding2(item, "& above");
     filterbyarryconteny(filterbyuserratingitem, item);
-  } else { 
+  } else {
+    counter1--;
     removeunckeckedfromfilters(item, event);
     removefilterbyarryconteny(filterbyuserratingitem, item);
+  }
+}
+/**/ ////////////////////////////////////////////////////////////////// */
+
+function filterbyram(item, checkbox, event) {
+  if (flag === 0) {
+    filteredArray.length = 0;
+  }
+  if (checkbox.checked) {
+    counter2++;
+    filteraddding2(item, "GB");
+    filterbyarryconteny(filterbyramitem, item);
+  } else {
+    counter2--;
+    removeunckeckedfromfilters(item, event);
+    removefilterbyarryconteny(filterbyramitem, item);
   }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
@@ -505,38 +564,80 @@ function finditembybrandname(item) {
   }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
-function filterbyuserratingitem(item){
-    for(let data of dataarry){
-      if(data.rating.average >= item){
-         myset1.add(data);
-      }
-    }     
-  }
-/**/ ////////////////////////////////////////////////////////////////// */
-function cimbinigarray(){
-  if(myset.size === 0 && myset1.size === 0){
-    return
-  }
-  if(myset.size === 0 || myset1.size === 0){
-    for (let item of myset) {
-      result.add(item);
+function filterbyuserratingitem(item) {
+  let newStr = item.slice(0, -1);
+  for (let data of dataarry) {
+    if (data.rating.average >= newStr) {
+      myset1.add(data);
     }
-    for (let item of myset1) {
-      result.add(item);
-    }
-    filteredArray = [...result];  
-  }else{
-    const commonSet = new Set();
-    for (let item of myset) {
-      if (myset1.has(item)) {
-        commonSet.add(item);
-      }
-    }
-    filteredArray = [...commonSet];  
   }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
-function filteraddding2(item1,item2) {
+function filterbyramitem(item) {
+  for (let data of dataarry) {
+    if (data.RAM == item) {
+      myset2.add(data);
+    }
+  }
+}
+/**/ ////////////////////////////////////////////////////////////////// */
+function cimbinigarray() {
+  flag1=0;
+  if (counter === 0 && counter1 === 0 && counter2 === 0) {
+
+    return; 
+
+  } else if (counter1 === 0 && counter2 === 0) {
+    for (let item of myset) {
+      result.add(item);
+    }
+    filteredArray = [...result];
+  } else if (counter === 0 && counter2 === 0) {
+    for (let item of myset1) {
+      result.add(item);
+    }
+    filteredArray = [...result];
+  } else if (counter === 0 && counter1 === 0) {
+    for (let item of myset2) {
+      result.add(item);
+    }
+    filteredArray = [...result];
+  } else {                            /**this is the last change so there is some bug is when a third element is empty it should return a empty array */
+    const allItems = [];
+
+    if (myset.size > 0) {
+      allItems.push(...myset)
+    }else if(counter > 0){
+           flag1++;
+    };
+    if (myset1.size > 0){
+      allItems.push(...myset1);
+    }else if(counter1 > 0){
+       flag1++;
+    }
+    if (myset2.size > 0){
+      allItems.push(...myset2);
+    }else if(counter2 > 0){
+      flag1++;
+    }
+    // const nonEmptySetsCount = [myset, myset1, myset2].filter(set => set.size > 0).length;
+    if (flag1 > 0) {
+      console.log("only one set have the data");
+      filteredArray = [];
+      return;
+    }
+    const itemCount = new Map();
+    allItems.forEach(item => {
+      itemCount.set(item, (itemCount.get(item) || 0) + 1);
+    });
+    const totalSets = [myset, myset1, myset2].filter(set => set.size > 0).length;
+    const commonItems = [...itemCount].filter(([item, count]) => count === totalSets).map(([item]) => item);   
+    filteredArray = commonItems;
+    
+  }
+} 
+/**/ ////////////////////////////////////////////////////////////////// */
+function filteraddding2(item1, item2) {
   const filteringspace = document.getElementById("Filters-id");
   let output = "";
   output += `
@@ -589,10 +690,10 @@ function addfilterreomovebutt() {
 /**/ ////////////////////////////////////////////////////////////////// */
 function removeunckeckedfromfilters(item) {
   console.log(item);
-  let allfilters = document.querySelectorAll('.crossxbutt');
+  let allfilters = document.querySelectorAll(".crossxbutt");
   allfilters.forEach((data) => {
     let siblingText = data.nextElementSibling.textContent.trim();
-    let firstValue = siblingText.split(' ')[0];
+    let firstValue = siblingText.split(" ")[0];
     if (firstValue == item) {
       data.parentElement.remove();
     }
@@ -634,28 +735,28 @@ function removefilter(event) {
   /**single filtes removerd here..... */
   let parentdiv = event.target.parentElement;
   parentdiv.remove();
-  
   let collection = document.querySelectorAll("#fitters-item");
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');
   let checkedval = event.target.nextElementSibling.textContent.trim();
-  let firstValue = checkedval.split(' ')[0];
+  let firstValue = checkedval.split(" ")[0];
   checkboxes.forEach((checkboxe) => {
     let val = checkboxe.nextElementSibling.textContent;
     let checkedval2 = checkboxe.nextElementSibling.textContent.trim();
-    let firstValue2 = checkedval2.split(' ')[0];
+    let firstValue2 = checkedval2.split(" ")[0];
     if (firstValue2 === firstValue && checkboxe.checked) {
       checkboxe.checked = false;
-      removefilterbyarryconteny(finditembybrandname,val)
+      let inputid = checkboxe.id;
+      removebuttandremovefunction(val,inputid)
     }
   });
   if (collection.length == 0) {
     const item2 = document.getElementById("claearall");
-    item2.innerHTML='';
+    item2.innerHTML = "";
     filteredArray.length = 0;
     numberoffilters.length = 0; /**numberof flters is zero */
     minmaxpricefiltering();
   }
-  if (parentdiv.className == 'minmaxdiv') {
+  if (parentdiv.className == "minmaxdiv") {
     minprice = "MIN";
     maxprice = "MAX";
     priceadjuster();
@@ -667,6 +768,25 @@ function removefilter(event) {
     document.querySelectorAll(
       "#fitters-item"
     ); /**find the numbers of filters */
+}
+/**/ ////////////////////////////////////////////////////////////////// */
+
+function removebuttandremovefunction(data, idvalue) {
+  if (idvalue == 'option-1') {
+    console.log("Removing filter by brand name");
+    counter--;
+    removefilterbyarryconteny(finditembybrandname, data);
+  } else if (idvalue === 'option-2') {
+    console.log("Removing filter by user rating");
+    counter1--;
+    let data1=data.slice(0,-8)
+    removefilterbyarryconteny(filterbyuserratingitem, data1);
+  } else if (idvalue === 'option-3') {
+    console.log("Removing filter by RAM");
+    counter2--;
+    let data1=data.slice(0,-3)
+    removefilterbyarryconteny(filterbyramitem, data1);
+  }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function priceadjuster() {
@@ -750,23 +870,41 @@ function filterbyarryconteny(func, item) {
   minmaxpricefiltering();
 }
 function callallthefilterinthearry() {
-  console.log("///////////////////////////////////////////////////////////")
+  console.log("///////////////////////////////////////////////////////////");
+  console.log(funcnamearray);
   filteredArray.length = 0;
   myset.clear();
   myset1.clear();
+  myset2.clear();
   result.clear();
   funcnamearray.forEach((data) => {
     let fun = data[0];
     let value = data[1];
     fun(value);
   });
-  cimbinigarray()
+  cimbinigarray();
 }
 function removefilterbyarryconteny(func, itemname) {
   funcnamearray = funcnamearray.filter(
-    (item) => 
-      !(item[0] === func && item[1] === itemname)
-    
+    (item) => !(item[0] === func && item[1] === itemname)
   );
   minmaxpricefiltering();
+}
+function makenoitempage(){
+  const productContainer = document.querySelector(".productsshowHere");
+  productContainer.innerHTML = "";
+  let output='';
+  output =`
+      <div class="nothingfound">
+         <div class="nothingfound-inner">
+            <div class="nothingfound-inner-content">
+               <img src="img/error-no-search-results_2353c5.png">
+               <div class="nothingfound-text-1">Sorry, no results found!</div>
+               <div class="nothingfound-text-2">Please check the spelling or try searching for something else</div>
+            </div>
+         </div>
+      </div>
+  `;
+  productContainer.insertAdjacentHTML("afterbegin", output);
+  
 }

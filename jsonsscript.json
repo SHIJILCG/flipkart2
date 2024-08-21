@@ -16,32 +16,25 @@
             {
                 "listscrolldownbutt":[
                     {
-                        "listscrolldownbuttText":"Electonics",
-                        "listscrolldownbuttImg":"svgexport-12 (2).svg"
+                        "listscrolldownbuttText":"Electonics"
                     },
                     {
-                        "listscrolldownbuttText":"TVs & Appliances",
-                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                        "listscrolldownbuttText":"TVs & Appliances"
                     },
                     {
-                        "listscrolldownbuttText":"Men",
-                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                        "listscrolldownbuttText":"Men"
                     } ,
                     {
-                        "listscrolldownbuttText":"Women",
-                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                        "listscrolldownbuttText":"Women"
                     },
                     {
-                        "listscrolldownbuttText":"Baby & Kids",
-                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                        "listscrolldownbuttText":"Baby & Kids"
                     },
                     {
-                        "listscrolldownbuttText":"Home & Furniture",
-                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                        "listscrolldownbuttText":"Home & Furniture"
                     },
                     {
-                        "listscrolldownbuttText":"Sports, Books & More",
-                        "listscrolldownbuttImg":"svgexport-4 (2).svg"
+                        "listscrolldownbuttText":"Sports, Books & More"
                     }
                 ],
                 "abutt":[
@@ -61,7 +54,13 @@
                 "sorting":["Relevance","Popularity","price--Low to High","price--High to Low","Newest First"]
             },
             "sortingrationg":{
-                 "ratingsorting":[4,3]
+                 "ratingsorting":["4★","3★"]
+            },
+            "sortingbyram":{
+                   "ramdata":[4,3,2,1,8,6,12]
+            },
+            "text":{
+               "thee":["A page and the page the page and its and the are and "]
             }
 
 }

@@ -1,8 +1,7 @@
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* border: 1px solid red; */
   }
   
   body {
@@ -286,8 +285,6 @@
     font-family: text-1;
     text-decoration: none;
     color: #000;
-  
-  
   }
   
   .listscrolldownbutt-item img {
@@ -295,7 +292,7 @@
     transform: rotate(270deg);
     width: 4.7px;
     height: 8px;
-    opacity: 1;
+    opacity: 0.5;
   
   }
   
@@ -427,14 +424,17 @@
   
   #price-maintain,
   #brand-section,
-  #userratingsection{
+  #userratingsection,
+  #ramsection{
     padding: 16px;
     border-bottom: 1px solid #f0f0f0;
     background-color: #fff;
   }
   
   .price-maintain-text,
-  .userratingsection-text-inner {
+  .userratingsection-text-inner,
+  .ramsection-text-inner{
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -573,14 +573,13 @@
     flex-grow: 2;
   
   }
-  
   .min-butt select,
   .max-but select {
     width: 100%;
     border: 1px solid #e0e0e0;
     border-radius: 1px;
     appearance: none;
-    background: #fff url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhl…yMTIxMjEiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==) no-repeat 90% 50%;
+    background: #fff no-repeat 90% 50%;
     height: 24px;
     font-size: 24px;
     color: #212121;
@@ -608,7 +607,8 @@
   }
   
   .brand-text,
-   .userratingsection-text{
+   .userratingsection-text,
+   .ramsection-text{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -627,7 +627,8 @@
   }
   
   .brand-text img,
-  .userratingsection-text img{
+  .userratingsection-text img,
+  .ramsection-text img{
     transform: rotate(90deg);
     display: inline-block;
     cursor: pointer;
@@ -1127,4 +1128,34 @@
     font-family: text-1;
     z-index: 5;
     padding-bottom: 1px;
+  }
+  .nothingfound{
+    margin: 0 auto;
+    min-width: 978px;
+    max-width: 1680px;
+    padding: 8px;
+    width: 100%;
+    position: relative;
+  }
+  .nothingfound-inner{
+    display: block;
+    width: 100%;
+  }
+  .nothingfound-inner-content{
+    background: #fff;
+    padding: 50px;
+    text-align: center;
+  }
+  .nothingfound-text-1{
+    font-size: 26px;
+    font-weight: 500;
+    margin: 20px 0 10px;
+    font-family: text-1;
+    
+  }
+  .nothingfound-text-2{
+    color: #878787;
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-family: text-2;
   }
