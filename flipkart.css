@@ -1159,3 +1159,33 @@
     margin-bottom: 8px;
     font-family: text-2;
   }
+  .pagination-inner{
+         background: #fff;
+         border-top: 1px solid #e0e0e0;
+         display: flex;
+         justify-content: space-around;
+         align-items: center;
+         padding: 10px;
+         line-height: 32px;
+  }
+  .navigationpages{
+    padding: 4px 0px;
+    text-align: center;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+  .page{
+    display: inline-block;
+    padding: 0px 8px;
+    cursor: pointer;
+    line-height: 32px;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    font-family: text-1;
+  }
+  .pageactive{
+    background-color: #2874f0;
+    color: white;
+  }

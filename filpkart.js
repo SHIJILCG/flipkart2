@@ -9,12 +9,16 @@ const result = new Set();
 var Array2 = [];
 var numberoffilters = [];
 var funcnamearray = [];
+var therealresult = [];
 numberoffilters.length = 0;
 let flag = 0;
-let flag1=0;
+let flag1 = 0;
 let counter = 0;
-let counter1=0;
-let counter2=0;
+let counter1 = 0;
+let counter2 = 0;
+let toalnumberofpagination = 0;
+let reminder = 0;
+let pagenumbervalue=1;
 var sorttextvalue = "Relevance";
 const originalMinOptions = Array.from(
   document.getElementById("select-price-1").options
@@ -52,8 +56,6 @@ function mainone(data) {
     dataarry.push(item);
     Array2.push(item);
   }
-  let item4 = document.getElementById("numberofresults");
-  item4.innerHTML += `Showing 1 – 24 of ${dataarry.length} results for "Mobiles"`;
   filteredArray.length = 0;
   sortOptionClickeddisplayed("Relevance");
 }
@@ -332,13 +334,13 @@ function sortOptionClickeddisplayed(text) {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       console.log("filters not applyed");
       Array2.sort((a, b) => a.relevance - b.relevance);
-      createpriducts(Array2);
+      makingpagination(Array2);
     } else {
       console.log("filters are applyed");
       filteredArray.sort((a, b) => a.relevance - b.relevance);
-      createpriducts(filteredArray);
-      if(filteredArray.length===0){
-        makenoitempage()
+      makingpagination(filteredArray);
+      if (filteredArray.length === 0) {
+        makenoitempage();
         return;
       }
     }
@@ -346,13 +348,13 @@ function sortOptionClickeddisplayed(text) {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       console.log("filters not applyed");
       Array2.sort((a, b) => a.rating.average - b.rating.average);
-      createpriducts(Array2);
+      makingpagination(Array2);
     } else {
       console.log("filters are applyed");
       filteredArray.sort((a, b) => a.rating.average - b.rating.average);
-      createpriducts(filteredArray);
-      if(filteredArray.length===0){
-        makenoitempage()
+      makingpagination(filteredArray);
+      if (filteredArray.length === 0) {
+        makenoitempage();
         return;
       }
     }
@@ -360,25 +362,25 @@ function sortOptionClickeddisplayed(text) {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       console.log("filters not applyed");
       Array2.sort((a, b) => b.price - a.price);
-      createpriducts(Array2);
+      makingpagination(Array2);
     } else {
       console.log("filters are applyed");
       filteredArray.sort((a, b) => b.price - a.price);
-      createpriducts(filteredArray);
-      if(filteredArray.length===0){
-        makenoitempage()
+      makingpagination(filteredArray);
+      if (filteredArray.length === 0) {
+        makenoitempage();
         return;
       }
     }
   } else if (text == "price--High to Low") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       Array2.sort((a, b) => a.price - b.price);
-      createpriducts(Array2);
+      makingpagination(Array2);
     } else {
       filteredArray.sort((a, b) => a.price - b.price);
-      createpriducts(filteredArray);
-      if(filteredArray.length===0){
-        makenoitempage()
+      makingpagination(filteredArray);
+      if (filteredArray.length === 0) {
+        makenoitempage();
         return;
       }
     }
@@ -387,14 +389,14 @@ function sortOptionClickeddisplayed(text) {
       Array2.sort(
         (a, b) => new Date(b.newLaunchDate) - new Date(a.newLaunchDate)
       );
-      createpriducts(Array2);
+      makingpagination(Array2);
     } else {
       filteredArray.sort(
         (a, b) => new Date(b.newLaunchDate) - new Date(a.newLaunchDate)
       );
-      createpriducts(filteredArray);
-      if(filteredArray.length===0){
-        makenoitempage()
+      makingpagination(filteredArray);
+      if (filteredArray.length === 0) {
+        makenoitempage();
         return;
       }
     }
@@ -491,6 +493,7 @@ function createpriducts(data) {
 
     productContainer.insertAdjacentHTML("afterbegin", output);
   }
+    makingthepagaforpagination(toalnumberofpagination);
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function listcreating(data) {
@@ -521,7 +524,6 @@ function filterbybrandname(item, checkbox, event) {
     removeunckeckedfromfilters(item, event);
     removefilterbyarryconteny(finditembybrandname, item);
   }
-
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 
@@ -530,7 +532,7 @@ function filterbyuserrating(item, checkbox, event) {
     filteredArray.length = 0;
   }
   if (checkbox.checked) {
-      counter1++;
+    counter1++;
     filteraddding2(item, "& above");
     filterbyarryconteny(filterbyuserratingitem, item);
   } else {
@@ -582,11 +584,9 @@ function filterbyramitem(item) {
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function cimbinigarray() {
-  flag1=0;
+  flag1 = 0;
   if (counter === 0 && counter1 === 0 && counter2 === 0) {
-
-    return; 
-
+    return;
   } else if (counter1 === 0 && counter2 === 0) {
     for (let item of myset) {
       result.add(item);
@@ -602,40 +602,45 @@ function cimbinigarray() {
       result.add(item);
     }
     filteredArray = [...result];
-  } else {                            /**this is the last change so there is some bug is when a third element is empty it should return a empty array */
+  } else {
     const allItems = [];
 
     if (myset.size > 0) {
-      allItems.push(...myset)
-    }else if(counter > 0){
-           flag1++;
-    };
-    if (myset1.size > 0){
-      allItems.push(...myset1);
-    }else if(counter1 > 0){
-       flag1++;
-    }
-    if (myset2.size > 0){
-      allItems.push(...myset2);
-    }else if(counter2 > 0){
+      allItems.push(...myset);
+    } else if (counter > 0) {
       flag1++;
     }
-    // const nonEmptySetsCount = [myset, myset1, myset2].filter(set => set.size > 0).length;
+    if (myset1.size > 0) {
+      allItems.push(...myset1);
+    } else if (counter1 > 0) {
+      flag1++;
+    }
+    if (myset2.size > 0) {
+      allItems.push(...myset2);
+    } else if (counter2 > 0) {
+      flag1++;
+    }
     if (flag1 > 0) {
-      console.log("only one set have the data");
+      console.log("some set is an empty");
       filteredArray = [];
       return;
     }
     const itemCount = new Map();
-    allItems.forEach(item => {
-      itemCount.set(item, (itemCount.get(item) || 0) + 1);
+    allItems.forEach((item) => {
+      itemCount.set(
+        item,
+        (itemCount.get(item) || 0) + 1
+      ); /* get an  a map of with item and count */
     });
-    const totalSets = [myset, myset1, myset2].filter(set => set.size > 0).length;
-    const commonItems = [...itemCount].filter(([item, count]) => count === totalSets).map(([item]) => item);   
+    const totalSets = [myset, myset1, myset2].filter(
+      (set) => set.size > 0
+    ).length; /*  get an number of nonempty set */
+    const commonItems = [...itemCount]
+      .filter(([item, count]) => count === totalSets)
+      .map(([item]) => item); /* to get item that present all sets*/
     filteredArray = commonItems;
-    
   }
-} 
+}
 /**/ ////////////////////////////////////////////////////////////////// */
 function filteraddding2(item1, item2) {
   const filteringspace = document.getElementById("Filters-id");
@@ -746,7 +751,7 @@ function removefilter(event) {
     if (firstValue2 === firstValue && checkboxe.checked) {
       checkboxe.checked = false;
       let inputid = checkboxe.id;
-      removebuttandremovefunction(val,inputid)
+      removebuttandremovefunction(val, inputid);
     }
   });
   if (collection.length == 0) {
@@ -772,19 +777,19 @@ function removefilter(event) {
 /**/ ////////////////////////////////////////////////////////////////// */
 
 function removebuttandremovefunction(data, idvalue) {
-  if (idvalue == 'option-1') {
+  if (idvalue == "option-1") {
     console.log("Removing filter by brand name");
     counter--;
     removefilterbyarryconteny(finditembybrandname, data);
-  } else if (idvalue === 'option-2') {
+  } else if (idvalue === "option-2") {
     console.log("Removing filter by user rating");
     counter1--;
-    let data1=data.slice(0,-8)
+    let data1 = data.slice(0, -8);
     removefilterbyarryconteny(filterbyuserratingitem, data1);
-  } else if (idvalue === 'option-3') {
+  } else if (idvalue === "option-3") {
     console.log("Removing filter by RAM");
     counter2--;
-    let data1=data.slice(0,-3)
+    let data1 = data.slice(0, -3);
     removefilterbyarryconteny(filterbyramitem, data1);
   }
 }
@@ -890,11 +895,11 @@ function removefilterbyarryconteny(func, itemname) {
   );
   minmaxpricefiltering();
 }
-function makenoitempage(){
+function makenoitempage() {
   const productContainer = document.querySelector(".productsshowHere");
   productContainer.innerHTML = "";
-  let output='';
-  output =`
+  let output = "";
+  output = `
       <div class="nothingfound">
          <div class="nothingfound-inner">
             <div class="nothingfound-inner-content">
@@ -906,5 +911,83 @@ function makenoitempage(){
       </div>
   `;
   productContainer.insertAdjacentHTML("afterbegin", output);
-  
 }
+function makingpagination(items) {
+  console.log(items);
+  therealresult.length = 0;
+  toalnumberofpagination=0;
+  reminder=0;
+  for (let item of items) {
+    therealresult.push(item);
+  }
+  let noOfitems = items.length;
+  reminder = noOfitems % 24;
+  toalnumberofpagination = (noOfitems - reminder) / 24;
+  if (toalnumberofpagination > 0) {
+    callingmakingproduct(1);
+  } else {
+    let item4 =document.getElementById("numberofresults"); 
+    item4.innerHTML = `Showing ${1} – ${items.length} of ${items.length} results for "Mobiles"`;
+    createpriducts(items);
+  }
+}
+function makingthepagaforpagination(value) {
+  const productContainer = document.querySelector(".productsshowHere");
+  let output = "";
+  output = `
+        <div class="pagination">
+            <div class="pagination-inner">
+                <nav class="navigationpages">
+                   ${makingpaginationcircle(value)}
+              </nav>
+           </div>
+        </div>
+  `;
+  productContainer.insertAdjacentHTML("beforeend", output);
+  const allpages = document.getElementsByClassName("page");
+  for (let item of allpages) {
+    if(item.textContent == pagenumbervalue){
+        item.classList.add('pageactive')
+    }
+  }
+  console.log("this is my code");
+
+}
+function makingpaginationcircle(value) {
+  let output = "";
+  for (let i = 1; i <= value + 1; i++) {
+    output += `<a class="page" onclick="changepage(${i},event)">${i}</a>`;
+  }
+  return output;
+}
+function changepage(value, event) {
+   pagenumbervalue=value;
+  callingmakingproduct(value);
+}
+function callingmakingproduct(pageNumber) {
+  let lengthresult=therealresult.length;
+  let startIndex = -24;
+  const pageSize = 24;
+  const allPageparent = document.getElementsByClassName("page");
+  let item4 =document.getElementById("numberofresults"); 
+  if (pageNumber > 1) {
+    startIndex = (pageNumber - 1) * pageSize;
+  }
+
+  let itemsToDisplay;
+  
+  if (pageNumber === 1) {
+    itemsToDisplay = therealresult.slice(-24);
+    item4.innerHTML = `Showing 1 – 24 of ${lengthresult} results for "Mobiles"`;
+  } else if (pageNumber === allPageparent.length) {
+    itemsToDisplay = therealresult.slice(0, reminder);
+    item4.innerHTML = `Showing ${lengthresult - reminder} – ${lengthresult} of ${lengthresult} results for "Mobiles"`;
+  } else {
+    itemsToDisplay = therealresult.slice(startIndex, startIndex + pageSize);
+    item4.innerHTML = `Showing ${startIndex} – ${startIndex + pageSize} of ${lengthresult} results for "Mobiles"`;
+
+  }
+  
+  createpriducts(itemsToDisplay);
+}
+
