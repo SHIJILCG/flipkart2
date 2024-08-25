@@ -13,6 +13,7 @@ var therealresult = [];
 numberoffilters.length = 0;
 let flag = 0;
 let flag1 = 0;
+let flag2=0;
 let counter = 0;
 let counter1 = 0;
 let counter2 = 0;
@@ -493,7 +494,9 @@ function createpriducts(data) {
 
     productContainer.insertAdjacentHTML("afterbegin", output);
   }
+  if(flag2 === 1){
     makingthepagaforpagination(toalnumberofpagination);
+  }
 }
 /**/ ////////////////////////////////////////////////////////////////// */
 function listcreating(data) {
@@ -913,7 +916,7 @@ function makenoitempage() {
   productContainer.insertAdjacentHTML("afterbegin", output);
 }
 function makingpagination(items) {
-  console.log(items);
+  pagenumbervalue=1;
   therealresult.length = 0;
   toalnumberofpagination=0;
   reminder=0;
@@ -924,8 +927,10 @@ function makingpagination(items) {
   reminder = noOfitems % 24;
   toalnumberofpagination = (noOfitems - reminder) / 24;
   if (toalnumberofpagination > 0) {
+    flag2=1
     callingmakingproduct(1);
   } else {
+    flag2=0;
     let item4 =document.getElementById("numberofresults"); 
     item4.innerHTML = `Showing ${1} – ${items.length} of ${items.length} results for "Mobiles"`;
     createpriducts(items);
@@ -950,7 +955,6 @@ function makingthepagaforpagination(value) {
         item.classList.add('pageactive')
     }
   }
-  console.log("this is my code");
 
 }
 function makingpaginationcircle(value) {
@@ -984,7 +988,7 @@ function callingmakingproduct(pageNumber) {
     item4.innerHTML = `Showing ${lengthresult - reminder} – ${lengthresult} of ${lengthresult} results for "Mobiles"`;
   } else {
     itemsToDisplay = therealresult.slice(startIndex, startIndex + pageSize);
-    item4.innerHTML = `Showing ${startIndex} – ${startIndex + pageSize} of ${lengthresult} results for "Mobiles"`;
+    item4.innerHTML = `Showing ${startIndex + 1} – ${startIndex + pageSize} of ${lengthresult} results for "Mobiles"`;
 
   }
   
