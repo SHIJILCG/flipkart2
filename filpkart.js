@@ -961,7 +961,12 @@ function makingpagination(items) {
       reminder=24;
     }
     callingmakingproduct(1);
-  } else {
+  }else if(items.length==0){ /* this is the last changed code here /////////////////////////////////////////////////////////////////////////////// */
+    let item4 =document.getElementById("numberofresults"); 
+    item4.innerHTML = `Showing 0 – 0 of 0 results for "mobiles"`;
+    createpriducts(items);
+  }
+   else {
     flag2=0;
     let item4 =document.getElementById("numberofresults"); 
     item4.innerHTML = `Showing ${1} – ${items.length} of ${items.length} results for "mobiles"`;
