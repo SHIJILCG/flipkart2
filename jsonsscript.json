@@ -16,7 +16,7 @@
             {
                 "listscrolldownbutt":[
                     {
-                        "listscrolldownbuttText":"Electonics"
+                        "listscrolldownbuttText":"Electronics"
                     },
                     {
                         "listscrolldownbuttText":"TVs & Appliances"
@@ -47,11 +47,11 @@
                 ]
             }, 
             "brandname":{
-                 "brand1":["SAMSUNG","vivo","realmi","POCO","MOTOROLA","OPPO"],
+                 "brand1":["SAMSUNG","vivo","realme","POCO","MOTOROLA","OPPO","Apple","OnePlus","Nokia","REDMI","Google","Infinix","Nothing"],
                   "numberofitems":5
             },
             "sortingNames":{
-                "sorting":["Relevance","Popularity","price--Low to High","price--High to Low","Newest First"]
+                "sorting":["Relevance","Popularity","Price -- Low to High","Price -- High to Low","Newest First"]
             },
             "sortingrationg":{
                  "ratingsorting":["4★","3★"]

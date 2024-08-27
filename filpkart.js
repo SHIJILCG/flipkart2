@@ -359,7 +359,7 @@ function sortOptionClickeddisplayed(text) {
         return;
       }
     }
-  } else if (text == "price--Low to High") {
+  } else if (text == "Price -- Low to High") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       console.log("filters not applyed");
       Array2.sort((a, b) => b.price - a.price);
@@ -373,7 +373,7 @@ function sortOptionClickeddisplayed(text) {
         return;
       }
     }
-  } else if (text == "price--High to Low") {
+  } else if (text == "Price -- High to Low") {
     if (filteredArray.length == 0 && numberoffilters.length == 0) {
       Array2.sort((a, b) => a.price - b.price);
       makingpagination(Array2);
@@ -425,6 +425,19 @@ function createpriducts(data) {
                                                       }"> 
                                                  </div>
                                             </div>
+                                            <div class="addtocompare">
+                                               <div class="select-butt-inner">
+                                                    <label">
+                                                         <input type="checkbox" id="option-1" onchange="">
+                                                         <div class="select-butt-inner-text-type-two">Add to Compare</div>
+                                                    </label">
+                                               </div>
+                                            </div>
+                                            <div class="addtowish">
+                                              <div class="addtowish-inner">
+                                                  <img src="img/svgexport-13 (1).svg">
+                                              </div>
+                                            </div>
                                        </div>
                                         <div class="product-right-side">
                                             <div class="product-details">
@@ -462,16 +475,18 @@ function createpriducts(data) {
                                             <div class="product-buying-details">
                                                <div class="price-details">
                                                     <div class="price">
-                                                       <div class="price-text">₹${
+                                                       <div class="price-text">₹${addcommainprice(
                                                          item.price
-                                                       }</div>
+                                                       )}</div>
                                                        <div class="old-price-text">₹${
-                                                         item.mrp
+                                                        addcommainprice(
+                                                          item.price
+                                                        )
                                                        }</div>
                                                         <div class="off-percentage"><span>${finddiscount(
                                                           item.price,
                                                           item.mrp
-                                                        )}</span></div>
+                                                        )} off</span></div>
                                                     </div>
                                                     <div class="free-delivery">
                                                       <div>
@@ -509,8 +524,18 @@ function listcreating(data) {
   return output;
 }
 /**/ ////////////////////////////////////////////////////////////////// */
+function addcommainprice(num) {
+  let numberOfDigits = num.toString().length;
+  let brakingpoint = numberOfDigits - 3;
+  let val = num.toString();
+  let val1 = val.slice(0, brakingpoint);
+  let val2 = val.slice(brakingpoint);
+  let result = val1 + "," + val2;
+  return result;
+}
+/**/ ////////////////////////////////////////////////////////////////// */
 function finddiscount(a, b) {
-  return (((b - a) / b) * 100).toFixed(2) + "%";
+  return (((b - a) / b) * 100).toFixed(0) + "%";
 }
 /**/ ////////////////////////////////////////////////////////////////// */allthesortingareshowhere
 function filterbybrandname(item, checkbox, event) {
@@ -719,6 +744,7 @@ function clearallthefilters() {
   const item2 = document.getElementById("claearall");
   const item3 = document.getElementById("clearallthing-child");
   filteringspace.innerHTML = "";
+  funcnamearray.length=0;
   item2.removeChild(item3);
   let checkboxes = document.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach((checkboxe) => {
@@ -803,10 +829,10 @@ function priceadjuster() {
   const leftbutt1 = document.getElementsByClassName("left-butt")[0];
   if (minprice == "MIN" && maxprice == "MAX") {
     rightbutt1.style.transform = "translateX(-1.19px)";
-    leftbutt1.style.transform = "translateX(0px)";
+    leftbutt1.style.transform = "translateX(-7px)";
     line1.style.transform = "translate(0px) scaleX(0.995)";
   } else if (minprice == "MIN") {
-    leftbutt1.style.transform = "translateX(0px)";
+    leftbutt1.style.transform = "translateX(-7px)";
 
     if (maxprice == 10000) {
       rightbutt1.style.transform = "translateX(-190.638px)";
@@ -926,13 +952,19 @@ function makingpagination(items) {
   let noOfitems = items.length;
   reminder = noOfitems % 24;
   toalnumberofpagination = (noOfitems - reminder) / 24;
-  if (toalnumberofpagination > 0) {
+  if(reminder !== 0){
+     toalnumberofpagination= toalnumberofpagination + 1;
+  }
+  if (toalnumberofpagination > 1) {
     flag2=1
+    if(reminder === 0){
+      reminder=24;
+    }
     callingmakingproduct(1);
   } else {
     flag2=0;
     let item4 =document.getElementById("numberofresults"); 
-    item4.innerHTML = `Showing ${1} – ${items.length} of ${items.length} results for "Mobiles"`;
+    item4.innerHTML = `Showing ${1} – ${items.length} of ${items.length} results for "mobiles"`;
     createpriducts(items);
   }
 }
@@ -959,7 +991,7 @@ function makingthepagaforpagination(value) {
 }
 function makingpaginationcircle(value) {
   let output = "";
-  for (let i = 1; i <= value + 1; i++) {
+  for (let i = 1; i <= value; i++) {
     output += `<a class="page" onclick="changepage(${i},event)">${i}</a>`;
   }
   return output;
@@ -967,6 +999,10 @@ function makingpaginationcircle(value) {
 function changepage(value, event) {
    pagenumbervalue=value;
   callingmakingproduct(value);
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 function callingmakingproduct(pageNumber) {
   let lengthresult=therealresult.length;
@@ -979,19 +1015,19 @@ function callingmakingproduct(pageNumber) {
   }
 
   let itemsToDisplay;
-  
+
   if (pageNumber === 1) {
     itemsToDisplay = therealresult.slice(-24);
-    item4.innerHTML = `Showing 1 – 24 of ${lengthresult} results for "Mobiles"`;
+    item4.innerHTML = `Showing 1 – 24 of ${lengthresult} results for "mobiles"`;
   } else if (pageNumber === allPageparent.length) {
     itemsToDisplay = therealresult.slice(0, reminder);
-    item4.innerHTML = `Showing ${lengthresult - reminder} – ${lengthresult} of ${lengthresult} results for "Mobiles"`;
+    item4.innerHTML = `Showing ${lengthresult - reminder} – ${lengthresult} of ${lengthresult} results for "mobiles"`;
   } else {
     itemsToDisplay = therealresult.slice(startIndex, startIndex + pageSize);
-    item4.innerHTML = `Showing ${startIndex + 1} – ${startIndex + pageSize} of ${lengthresult} results for "Mobiles"`;
+    item4.innerHTML = `Showing ${startIndex + 1} – ${startIndex + pageSize} of ${lengthresult} results for "mobiles"`;
 
   }
-  
+
   createpriducts(itemsToDisplay);
 }
 
