@@ -82,7 +82,7 @@ function headerparts(data) {
   var item9 = document.getElementById("flipcart-Cart-butt-text");
   item1.innerText = data.loginSellername;
   item2.src = data.Flipcartimg;
-  item3.placeholder = data.placeholdertext;
+  item3.value = data.placeholdertext;
   item4.src = data.Sarchimgheader;
   item5.innerText = data.loginbuttname;
   item6.innerText = data.loginMorename;

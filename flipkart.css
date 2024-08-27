@@ -740,9 +740,8 @@ section {
   text-overflow: ellipsis;
   line-height: 1;
   cursor: pointer;
-  font-family: text-1;
+  font-family: text-4;
   margin-top: -4px;
-  font-family: text-1;
 }
 
 .brand-search-section-inner-2 {
